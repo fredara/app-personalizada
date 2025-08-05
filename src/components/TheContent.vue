@@ -30,7 +30,7 @@
     </p>
     <p class="mt-4 text-lg leading-relaxed">
       Si quieres conocer más sobre cómo se construyó esta aplicación,
-      <a class="underline" href="https://github.com/fredaran/app-personalizada" target="_blank" rel="noopener noreferrer">visita el repositorio en GitHub</a>.
+      <a class="underline" href="https://github.com/fredara/app-personalizada" target="_blank" rel="noopener noreferrer">visita el repositorio en GitHub</a>.
     </p>
     
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
