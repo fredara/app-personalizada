@@ -1,68 +1,97 @@
 <template>
-  <footer class="p-4 rounded-lg text-center shadow-md" :style="{
-    backgroundColor: getBackgroundColor(sectionToModify, previewTheme),
-    color: getTextColor(sectionToModify, previewTheme),
-  }">
-    <p class="text-sm"> 2025 Mi Sitio Web. Todos los derechos reservados.</p>
+  <footer 
+    class="p-6 rounded-lg text-center shadow-md transition-all duration-300" 
+    :style="footerStyles"
+  >
+    <div class="max-w-4xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-4">
+        <div class="text-center">
+          <h4 class="font-semibold mb-2">Desarrollo</h4>
+          <p class="text-sm opacity-80">
+            Aplicación construida con Vue.js y Tailwind CSS
+          </p>
+        </div>
+        <div class="text-center">
+          <h4 class="font-semibold mb-2">Personalización</h4>
+          <p class="text-sm opacity-80">
+            Sistema de temas en tiempo real con persistencia local
+          </p>
+        </div>
+        <div class="text-center">
+          <h4 class="font-semibold mb-2">Características</h4>
+          <p class="text-sm opacity-80">
+            Reactividad, validación y gestión de estado avanzada
+          </p>
+        </div>
+      </div>
+      
+      <div class="border-t border-current border-opacity-20 pt-4">
+        <p class="text-sm">
+          © 2025 Mi Sitio Web Personalizable. Todos los derechos reservados.
+        </p>
+        <p class="text-xs mt-2 opacity-70">
+          Desarrollado como prueba de concepto para demostrar capacidades de Vue.js
+        </p>
+      </div>
+    </div>
   </footer>
 </template>
 
 <script>
-import { useTheme } from '../composables/principal';
+import { useTheme } from '../composables/principal.js';
 
 export default {
   name: 'TheFooter',
-  setup() {
-    const { previewTheme, sectionToModify } = useTheme();
-
-    const getBackgroundColor = (section, theme) => {
-      if (section === 'all' && theme.colors.footer.bgColor === '#000') {
-        return theme.colors.global.bgColor;
+  computed: {
+    footerStyles() {
+      const { getSectionStyles, getGlobalStyles } = useTheme();
+      
+      if (this.sectionToModify === 'footer') {
+        // Si se está modificando específicamente el footer, usar sus estilos
+        return getSectionStyles('footer');
+      } else {
+        // Si es global o se está modificando otra sección, usar estilos globales
+        return getGlobalStyles();
       }
-
-      if (section === 'footer' && theme.colors.footer.bgColor === '#000') {
-        return theme.colors.global.bgColor;
-      }
-
-      if (section === 'footer' && theme.colors.footer.bgColor !== '#000') {
-        return theme.colors.footer.bgColor;
-      }
-
-      if (section === 'header' || section === 'content') {
-        return theme.colors.global.bgColor;
-      }
-
-      return theme.colors.footer.bgColor;
-    };
-
-    const getTextColor = (section, theme) => {
-      if (section === 'all' && theme.colors.footer.textColor === '#fff') {
-        return theme.colors.global.textColor;
-      }
-
-      if (section === 'footer' && theme.colors.footer.textColor === '#fff') {
-        return theme.colors.global.textColor;
-      }
-
-      if (section === 'footer' && theme.colors.footer.textColor !== '#fff') {
-        return theme.colors.footer.textColor;
-      }
-
-      if (section === 'header' || section === 'content') {
-        return theme.colors.global.textColor;
-      }
-
-      return theme.colors.footer.textColor;
-    };
-
-    return {
-      previewTheme,
-      sectionToModify,
-      getBackgroundColor,
-      getTextColor,
-    };
+    }
   },
+  setup() {
+    const { 
+      sectionToModify,
+      getSectionStyles,
+      getGlobalStyles
+    } = useTheme();
+    
+    return { 
+      sectionToModify,
+      getSectionStyles,
+      getGlobalStyles
+    };
+  }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+/* Estilos adicionales para mejorar la apariencia */
+footer {
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Efectos hover para los elementos del footer */
+footer h4 {
+  transition: opacity 0.2s ease-in-out;
+}
+
+footer:hover h4 {
+  opacity: 1;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+</style>
